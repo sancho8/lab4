@@ -7,6 +7,7 @@ before_install:
   - docker build -t node-docker .
   - sudo /etc/init.d/postgresql stop
   - sudo service postgresql start
+  - docker run -d --rm -p 5433:5433 -e POSTGRES_USER=admin -v $(pwd)/sql:/sql --name nd-db postgres:9.6 
   - docker run --rm -p 3000:3000 -d -v ${pwd}/app/src/app -v ${pwd}/public/src/public --link nd-db --name nd-app node-docker
 before_script:
   - npm install
